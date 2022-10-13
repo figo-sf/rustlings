@@ -18,7 +18,6 @@
 // - The output element is going to be a Vector of strings.
 // No hints this time!
 
-// I AM NOT DONE
 
 pub enum Command {
     Uppercase,
@@ -30,20 +29,34 @@ mod my_module {
     use super::Command;
 
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input:Vec<(String,Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![];
         for (string, command) in input.iter() {
-            // TODO: Complete the function body. You can do it!
+            match command{
+                Command::Uppercase=>output.push((&string).to_ascii_uppercase().to_string()),
+                Command::Trim=>output.push((&string).trim().to_string()),
+                Command::Append(u)=>output.push(appand(string.to_string(),*u)),
+            }
         }
         output
+    }
+
+    pub fn appand(str:String,u:usize)->String{
+        let mut _a =String::from(str);
+        for i in 0..u {
+            _a.push_str("bar");
+        }
+        _a
     }
 }
 
 #[cfg(test)]
 mod tests {
     // TODO: What do we have to import to have `transformer` in scope?
-    use ???;
+    use super::my_module::transformer;
+    use super::my_module::appand;
+
     use super::Command;
 
     #[test]
@@ -58,5 +71,10 @@ mod tests {
         assert_eq!(output[1], "all roads lead to rome!");
         assert_eq!(output[2], "foobar");
         assert_eq!(output[3], "barbarbarbarbarbar");
+    }
+
+    #[test]
+    fn it_appand() {
+        assert_eq!("foobarbar", appand("foo".to_string(),2));
     }
 }
